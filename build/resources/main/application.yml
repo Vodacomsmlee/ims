@@ -1,0 +1,82 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /ims
+  error:
+    path: /error
+---
+
+# database 설정
+spring:
+  datasource:
+    hikari: #main
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#      jdbc-url: jdbc:log4jdbc:mysql://192.168.120.188:3306/ims?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+      jdbc-url: jdbc:log4jdbc:mariadb://localhost:3306/ims?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+      username: root
+      password: 7200
+      #connection-test-query: SELECT NOW()
+      max-lifetime: 580000 #580s
+
+
+---
+# devtools
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+
+---
+#thymeleaf 사용
+spring:
+  thymeleaf:
+    prefix : classpath:templates/
+    suffix : .html
+    cache : false
+
+---
+#tts설정
+tts:
+  server: 192.168.120.211
+  port: 7000
+  speakerid: 14 #TTS_HYERYUN_DB
+  voiceformat: 12 #8bit A-law PCM Wave
+  volume: 100
+  speed: 100
+  pitch: 100 #합성음 높낮이
+  temppath: /tmp/ #로컬 임시 저장 path
+
+---
+
+#IVR SFTP
+ftp:
+  servermain: 192.168.120.206
+  serversub: 192.168.120.207
+  port: 22
+  userid: ubadmin
+  password: Ubcare@cti1504~
+  target: /usr/share/freeswitch/sounds
+
+#로그 레벨
+logging:
+  config:
+    level: INFO
+    path: /opt/tomcat/latest/logs #/logs
+    filename: ims
+    errfilename: ims_error
+
+---
+
+#MultipartUpload
+spring:
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+upload:
+  temppath: C:\Temp\
+  boardpath: /upload/board/
+  minibarpath: /upload/minibar/
+

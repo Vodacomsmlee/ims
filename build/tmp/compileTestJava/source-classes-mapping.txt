@@ -1,0 +1,2 @@
+com/vdc/ims/ImsApplicationTests.java
+ com.vdc.ims.ImsApplicationTests
